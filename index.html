@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+Тестовый проект игры BookOfRaDeluxe с использованием pixi.js
+-->
+<html>
+    <head>
+        <title>Web Queen Of Hearts Deluxe</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Cache-Control" content="no-cache">
+
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="../share/js/libs/jquery/jquery-3.6.0.min.js"></script>
+        <script src="../share/js/libs/jquery/jquery-element-onresize.js"></script>
+    </head>
+    <body>
+        <div id="initial" style="text-align: center;">
+            <button id="startGame">Start game</button>
+        </div>
+        <iframe id="gameFrame" allow="autoplay"  class="game-area" style="display: none;">
+        </iframe>
+        <script type="text/javascript">
+            $( function() {
+                $('#startGame').on( 'click', ()=>{
+                    $('#initial').hide();
+                    $('#gameFrame').attr( 'src', './game_dev.html' ).show();
+                });
+            });
+        </script>
+    </body>
+</html>
