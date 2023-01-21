@@ -435,8 +435,6 @@ class RiskBox extends GameItem {
       //   // this.riskCards.masks[i].x = this.riskCards.params[i].x
       // } else{
 
-      console.log( 18,this.riskCards.masks[i]);
-
       this.riskCards.masks[i] = this.updateRiskCard(
           this.riskCards.masks[i],
           this.riskCards.params[i],

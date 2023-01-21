@@ -116,10 +116,10 @@
             },
             "11": {
                 "normal": {
-                    "url": "./images/game/symbols/10.jpg",  "sprite": { "columns": 2, "count": 4, "url": "./images/game/symbols/win/11.jpg" }
+                    "url": "./images/game/symbols/11.jpg",  "sprite": { "columns": 2, "count": 4, "url": "./images/game/symbols/win/11.jpg" }
                 },
                 "bonus": {
-                    "url": "./images/game/symbols/bonus/10.jpg",  "sprite": { "columns": 2, "count": 4, "url": "./images/game/symbols/bonus/win/11.jpg" }
+                    "url": "./images/game/symbols/bonus/11.jpg",  "sprite": { "columns": 2, "count": 4, "url": "./images/game/symbols/bonus/win/11.jpg" }
                 }
             }
         }
@@ -426,8 +426,8 @@
             "horizontal": { "width": 2048, "height": 1024, "minWidth": 1470, "urls": [ "./images/game/bkg_bonus_h.png" ] }
         },
         "banner": {
-            "vertical":   { "x": 185, "y": 140, "width": 600, "height": 360, "urls": [ "./images/game/bonus/banner.png" ] },
-            "horizontal": { "x": 620, "y": 240, "width": 800, "height": 480, "urls": [ "./images/game/bonus/banner.png" ] }
+            "vertical":   { "x": 185, "y": 220, "width": 600, "height": 200, "urls": [ "./images/game/bonus/banner.png" ] },
+            "horizontal": { "x": 620, "y": 355, "width": 800, "height": 250, "urls": [ "./images/game/bonus/banner.png" ] }
         },
         "book": {
             "x": 175, "y": 80, "width": 455, "height": 287, "urls": [ "./images/game/bonus/book-back.png" ],

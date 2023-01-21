@@ -160,6 +160,27 @@ class Line extends GameItem {
 
     showWin( winData ) {
         let form = this.options.form;   // форма линии в позициях символов (от 0 до 2)
+
+        let game = Game.instance();
+        let winSymCount = winData[ 0 ];
+        let symbolId;
+        let finalSymbols = game.serverData.setSymbols;      // символы останова
+        let winLine = form;           // форма выигрышной линии
+        for ( let i = 0; i < winSymCount; ++i ) {
+            let symbolPos = winLine[i];
+            if ( finalSymbols[i][symbolPos] !== game.symbols.scatter.id ) {
+                symbolId = finalSymbols[i][symbolPos];
+                break;
+            }
+        }
+
+        // если колличество символов больще 4 то добавляем в массив для долгой анимации
+        if( (symbolId === 1 && winSymCount >=  4 )  ){
+            game.aLotOfSymbols.push(symbolId);
+            // создать массив без повторений 
+            game.aLotOfSymbols = Array.from([...new Set(game.aLotOfSymbols)])
+        };
+
         if ( this.winObjects.length == 0 ) {
 
             Log.out( 'Create symbols for win line' );

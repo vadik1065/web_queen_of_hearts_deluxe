@@ -172,6 +172,7 @@ class LineBox extends GameItem {
             // Запустить таймер перехода к следующей линии
 
             this.nextLineTimer = setTimeout( this.onNextLine, LineBox.NEXT_LINE_INTERVAL, { self: this } );
+            // this.nextLineTimer = setTimeout( this.onNextLine, 500, { self: this } );
         }
     }
 

@@ -34,11 +34,19 @@ class WinSymbol extends GameItem {
         let textures = [];
         let info = game.symbols.info[ symbol ];
         let def = reelBox.bonusSymbols ? info.bonus : info.normal;
-        if ( def.sprite ) {    // задан спрайт
-            let cnt = def.sprite.count;
-            let colCount = def.sprite.columns;
+        let longs = def.longs;
+
+        let curSprite = def.sprite;
+        if(game.aLotOfSymbols.includes(symbol) && longs?.length){
+            curSprite = longs[0];
+        }
+
+       
+        if ( curSprite ) {    // задан спрайт
+            let cnt =curSprite.count;
+            let colCount =curSprite.columns;
             let symbolSize = game.symbols.size.horizontal;
-            let sprite = PIXI.Texture.from( def.sprite.url );
+            let sprite = PIXI.Texture.from( curSprite.url );
             for ( let i = 0; i < cnt; ++i ) {
                 let x = ( i % colCount ) * symbolSize.width;
                 let y = Math.floor( i / colCount ) * symbolSize.height;

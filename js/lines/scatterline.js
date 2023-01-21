@@ -47,6 +47,15 @@ class ScatterLine extends GameItem {
      */
 
     showWin( winData ) {
+        let game = Game.instance();
+        let winSymCount = winData[ 0 ];
+
+        // если колличество символов больще 3 то добавляем в массив для долгой анимации
+        if( winSymCount >=  3 ){
+            game.aLotOfSymbols.push(  game.symbols.scatter.id);
+            game.aLotOfSymbols = Array.from([...new Set(game.aLotOfSymbols)])
+        };
+
         if ( this.winObjects.length == 0 ) {
 
             this.winSymbolCount = winData[ 0 ];
@@ -57,6 +66,8 @@ class ScatterLine extends GameItem {
 
             let game = Game.instance();
             let reelBox = game.reelBox;
+
+
 
             // Цикл по барабанам, слева направо
 

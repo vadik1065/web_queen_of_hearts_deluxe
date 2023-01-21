@@ -13,6 +13,7 @@ class Game extends GameItem {
 
     /** Идентификатор игры */
     static gameId = 45;
+    // static gameId = 40;
 
     /** Идентификатор текущего игрока */
     userId = 0;
@@ -73,6 +74,9 @@ class Game extends GameItem {
 
     // Настройка отображения джекпотов
     jackpotDef;
+
+    // Массив символов которых больше 4
+    aLotOfSymbols = [];
 
     //==========================================================================
     //  Управление состоянием игры
@@ -2386,6 +2390,7 @@ class Game extends GameItem {
     startTakeWin() {
 
         let game = Game.instance();
+        game.aLotOfSymbols = [];
 
         Log.out( 'Start take win ' + game.totalWinAmount );
 
@@ -2427,6 +2432,7 @@ class Game extends GameItem {
      */
     takeWinPiece() {
         let game = Game.instance();
+        
         if ( game.totalWinAmount > game.takeWinAmount ) {
             game.totalWinAmount -= game.takeWinAmount;
         }
@@ -2911,7 +2917,7 @@ class Game extends GameItem {
 
         // Показать стартовый баннер начала бонус-игры.
 
-        this.bonusBanner.showBook( this.specSymbol );
+        this.bonusBanner.showBook( bonusData.winFreeSpin );
         this.setState( Game.State.SHOW_BONUS_BANNER );
     }
 

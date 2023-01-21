@@ -33,21 +33,21 @@ class BonusBanner extends ImageItem {
            align: 'centerX'
         });
 
-        // Книга в центре
-        let book = new BonusBook( this, options );
-        book.addListener( 'pageFlipped', (params)=>{
-            this.onPageFlipped( params );
-        });
+        // // Книга в центре
+        // let book = new BonusBook( this, options );
+        // book.addListener( 'pageFlipped', (params)=>{
+        //     this.onPageFlipped( params );
+        // });
 
         // 2-ой блок текста
-        new TextItem( this, '', {
-           fontFamily: 'Tangodi',
-           fontSize: BonusBanner.FONT_SIZE,
-           color: 0xFFFF00,
-           y: 350,
-           align: 'centerX',
-           lineHeight: 40
-        });
+        // new TextItem( this, '', {
+        //    fontFamily: 'Tangodi',
+        //    fontSize: BonusBanner.FONT_SIZE,
+        //    color: 0xFFFF00,
+        //    y: 350,
+        //    align: 'centerX',
+        //    lineHeight: 40
+        // });
 
         this.setVisible( false );
     }
@@ -57,46 +57,20 @@ class BonusBanner extends ImageItem {
      *
      * @param {number} symbol идентификатор символа
      */
-    showBook( symbol ) {
-        this.lastSymbol = symbol;
+    showBook( countFreeSpin ) {
         this.animationFinished = false;
 
         let text1 = this.children[0];
-        text1.options.y = 40;
+        text1.options.y = 100;
         text1.options.align = 'centerX';
-        text1.updateText( '10 Free Games' );
+        text1.updateText( countFreeSpin+' Free Games' );
         text1.setVisible( true );
 
-        let text2 = this.children[2];
-        text2.options.y = 350;
-        text2.options.align = 'centerX';
-        text2.updateText( 'with special expanding\nsymbol' );
-        text2.setVisible( true );
-
-        // Заполнить массив символами за исключением заданного и символа "книга"
-        this.pageSymbols = [];
-        for ( let s = 1; s <= 10; ++s ) {
-            if ( s !== symbol && s !== BonusBanner.SYMBOL_BOOK ) this.pageSymbols.push( s );
-        }
-
-        // Перемешать массив символов
-        for ( let i = 0; i < 7; ++i ) {
-            var k = Tools.randomInt( i + 1, 7 );
-            var x = this.pageSymbols[i];
-            this.pageSymbols[i] = this.pageSymbols[k];
-            this.pageSymbols[k] = x;
-        }
-
-        // Добавить заданный символ
-        this.pageSymbols.push( symbol );
-
-        // Подготовить показ символов и открыть баннер
-        this.symbolIndex = 0;
-        let nextSymbol = this.pageSymbols[ this.symbolIndex ];
         this.setVisible( true );
-        let book = this.children[1];
-        book.setVisible( true );
-        setTimeout( ()=>{ book.startPageFlip( nextSymbol ) }, 500 );
+        setTimeout( ()=>{
+            this.animationFinished = true;
+            this.emit( 'animationFinished' );
+        }, 1000 ); 
     }
 
     /**
@@ -108,8 +82,7 @@ class BonusBanner extends ImageItem {
 
         this.setVisible( true );
 
-        this.children[1].setVisible( false );
-        this.children[2].setVisible( false );
+        // this.children[1].setVisible( false );
 
         let textItem = this.children[0];
         textItem.setVisible( true );
@@ -123,7 +96,6 @@ class BonusBanner extends ImageItem {
      * Скрыть баннер.
      */
     hide() {
-        this.children[1].reset();
         this.setVisible( false );
     }
 
@@ -147,12 +119,7 @@ class BonusBanner extends ImageItem {
                 this.emit( 'animationFinished' );
             }, 1000 );
         }
-        else {
-
-            // Показать следующий символ
-            let nextSymbol = this.pageSymbols[ ++this.symbolIndex ];
-            this.children[1].startPageFlip( nextSymbol );
-        }
+     
     }
 
     /**
