@@ -136,7 +136,6 @@ class LineBox extends GameItem {
      * Покзать текущую выигрышную линию.
      */
     showWinLine() {
-
         if ( this.winLineIndex == this.winLineNums.length ) {   // показали все линии
             this.winLineIndex = 0;
             if ( this.firstWinCycle ) {    // закончился первый цикл показа линий

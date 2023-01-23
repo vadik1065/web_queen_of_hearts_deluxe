@@ -1004,6 +1004,7 @@ class Game extends GameItem {
         game.reelBox = new ReelBox( game, game.reelDef.rotateStep );
         game.reelBox.setSymbols( params.restore ? params.restore.setSymbols : params.setSymbols );
         game.reelBox.addListener( 'rotationStopped', game.onRotationStopped );
+  
 
         game.lineBox = new LineBox( game );
         game.lineBox.addListener( 'winLineIsShown', game.onWinLineShown );
@@ -2089,6 +2090,23 @@ class Game extends GameItem {
     /**
      * Обработчик события полного останова барабанов.
      */
+
+    angelGiveHeart(){
+        let heartPoints = game.serverData.bonusGame?.heartPoints?.[0];
+        if( heartPoints?.length ){
+            heartPoints.forEach(heartPoint =>{
+                let inxRell = heartPoint[0];
+                let numRell = heartPoint[1];
+                let numHeart = 0;
+                game.reelBox.children[inxRell].setSymbol(numRell,numHeart);
+            } )
+        }
+    }
+
+
+    /**
+     * Обработчик события полного останова барабанов.
+     */
     onRotationStopped() {
 
         let game = Game.instance();
@@ -2112,14 +2130,13 @@ class Game extends GameItem {
                 game.showJackpot();
                 return;
             }
-
+          
             // Проверить наличие выигрышных линий
 
             let winLines = game.serverData.setWonLines;
             if ( Object.keys( winLines ).length > 0 ) { // если есть выигрышные линии
 
                 // Запустить показ выигрышных линий
-
                 game.setState( Game.State.SHOW_WIN_LINES );
                 game.lineBox.startShowWinLines( winLines );
             }

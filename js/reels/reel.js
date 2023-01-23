@@ -85,6 +85,9 @@ class Reel extends GameItem {
             // Спрайт символа
 
             let symbolIndex = Math.floor( Math.random() * parent.symbolCount );
+            if ( this.parent.bonusSymbols ){
+                symbolIndex = this.parent.getReplacesSymbols();
+            }
             let symbol = new PIXI.Sprite( parent.symbols[ symbolIndex ] );
             this.symbols.push( symbol );
 
@@ -110,6 +113,9 @@ class Reel extends GameItem {
             let symbolIndex = 0;
             if ( j == 0 || this.stoppedSymbols == null ) {
                 symbolIndex = Math.floor( Math.random() * reelBox.symbolCount );
+                if ( this.parent.bonusSymbols ){
+                    symbolIndex = this.parent.getReplacesSymbols();
+                }
             }
             else {  // j >= 1
                 // Подставить символы останова
@@ -198,6 +204,17 @@ class Reel extends GameItem {
     }
 
     /**
+     * Установить заданный символ на барабан.
+     */
+    setSymbol( index, symbol ) {
+        this.symbols[ index + 1 ].texture = this.parent.symbols[ symbol ];
+        this.stoppedSymbols[index] = symbol+1;
+        let rc = this.pixiObj;
+        rc.children[ index+1 ].texture = this.parent.symbols[ symbol ];
+        this.setStoppedSymbols(this.stoppedSymbols);
+    }
+
+    /**
      * Начать вращение барабана.
      */
     startRotate() {
@@ -273,12 +290,21 @@ class Reel extends GameItem {
                     symbolIndex = reel.stoppedSymbols[ 3 - reel.realSymbolCount ] - 1
                 }
                 else {
+                    
                     symbolIndex = Math.floor( Math.random() * reelBox.symbolCount );
+                    if ( reel.parent.bonusSymbols ){
+                        console.log(18,reel.parent.bonusSymbols );
+                        symbolIndex = reel.parent?.getReplacesSymbols();
+                    }
                 }
                 symbol.texture = reelBox.symbols[ symbolIndex ];
             }
             else {
-                symbol.texture = reelBox.symbols[ Math.floor( Math.random() * reelBox.symbolCount ) ];
+                let symbolIndex =  Math.floor( Math.random() * reelBox.symbolCount ) ;
+                if ( reel.parent?.bonusSymbols ){
+                    symbolIndex = reel.parent?.getReplacesSymbols();
+                }
+                symbol.texture = reelBox.symbols[ symbolIndex  ];
                 if ( reel.rotateState != Reel.State.BUMPING ) {
                     reel.rotateState = Reel.State.BUMPING;
                     reel.emit( 'stateChanged', { 'index': reel.index, 'state': reel.rotateState } );
