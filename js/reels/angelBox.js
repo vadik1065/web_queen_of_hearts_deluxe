@@ -108,6 +108,7 @@ class angelBox extends GameItem {
             let numHeart = angelBox.angelData.numHeart;
 
             angelBox.angelIsHeart = false;
+            game.startPlay( "origin/heart_placement" );
             reelBox.children[inxRell].setSymbol(numRell,numHeart);
             angelBox.setAngelAnimPos(x,y);
             angelBox.angelNopeHeart.visible = true;
@@ -131,7 +132,7 @@ class angelBox extends GameItem {
         let reelBox = game.reelBox;
         let angelBox = game.angelBox;
 
-        let x = angelBox.angelCoor[0] ;
+        let x = angelBox.angelCoor[0];
         let y = angelBox.angelCoor[1];
 
         let isContinueFlight = angelBox.angelIsHeart ? angelBox.routeToHeart(x,y) : angelBox.routeFromHeart(x,y);
@@ -163,6 +164,7 @@ class angelBox extends GameItem {
             angelBox.angelNopeHeart.visible = false;
 
             console.log('angelBox.angelData.num ',angelBox.angelData.num);
+            game.stopPlay( 'origin/cherub' );
             reelBox.emit( 'angelGiveHeart', {num: angelBox.angelData.num + 1} );
             return false;
         }
@@ -212,7 +214,10 @@ class angelBox extends GameItem {
         // console.log('inxRell', inxRell);
         // console.log('numRell', numRell);
 
+
         let game = Game.instance();
+        game.playLoop( 'origin/cherub' );
+
         let rellBox = game.reelBox;
         let scale = game.scale();
         let bkgPos = game.background.pos();

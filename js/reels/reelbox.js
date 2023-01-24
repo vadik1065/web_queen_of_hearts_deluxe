@@ -184,8 +184,28 @@ class ReelBox extends GameItem {
         let reelBox = game.reelBox;
 
         if ( state === Reel.State.RETURN ) {    // после бампинга проиграть звук останова
-            game.startPlay( 'reelstop' );
-        }
+            try{
+                let scatterId =  game.symbols.scatter.id;
+                let sound = game.serverData.setSymbols?.[index].some(symb => symb === scatterId);
+                // game.startPlay(  sound ? 'origin/scatter_1' :'reelstop' );
+                if (sound){
+                    if(index == 0){
+                        game.startPlay(  'origin/teaser_1'  );
+                    } else if(index == 1){
+                        game.startPlay(  'origin/teaser_2'  );
+                    } else if(index == 2){
+                        game.startPlay(  'origin/teaser_3'  );
+                    } else if(index == 3){
+                        game.startPlay(  'origin/teaser_4'  );
+                    } else if(index == 4){
+                        game.startPlay(  'origin/teaser_5'  );
+                    } 
+                }else {
+                    game.startPlay('reelstop' );
+                }
+            } catch (e){   
+                game.startPlay( 'reelstop' );
+            }        }
 
         if ( index < 4 ) {  // для барабанов с 1-го по 4-ый
 
@@ -229,7 +249,7 @@ class ReelBox extends GameItem {
         console.log('reelBox',reelBox);
         let angelBox = game.angelBox;
         let heartPoint = game.serverData?.bonusGame?.heartPoints?.[num];
-        Log.out('heartPoint '+num)
+        Log.out('heartPoint '+num);
         if(heartPoint){
             let inxRell = heartPoint[0];
             let numRell = heartPoint[1];

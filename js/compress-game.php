@@ -32,6 +32,7 @@
     include("controls/startbutton.js");
     include("controls/infobox.js");
     include("controls/controlbox.js");
+    include("help/angelBox.js");
     include("help/helpbox.js");
     include("help/helppage1.js");
     include("help/helppage2.js");

@@ -49,6 +49,24 @@ class SoundPlayer extends GameItem {
         "win5.mp3":                  { time: 1012 },
         "wincountstop.mp3":          { time: 620 },
         "winring_10steps.mp3":       { time: 1789 },
+        "winreel5.mp3":              { time:2090} ,
+        "origin/scatter_short.mp3":  { time:2810},
+        "origin/top_short.mp3":      { time:2590},
+        "origin/top_long.mp3":       { time:3900},
+        "origin/scatter_long.mp3":   { time:5780},
+        "origin/castle.mp3":         { time:4560},
+        "origin/cherub.mp3":         { time:26780},
+        "origin/crown.mp3":          { time:2630},
+        "origin/ring.mp3":           { time:3460},
+        "origin/rose.mp3":           { time:3590},
+        "origin/teaser_1.mp3":       { time:560},
+        "origin/teaser_2.mp3":       { time:430},
+        "origin/teaser_3.mp3":       { time:640},
+        "origin/teaser_4.mp3":       { time:760},
+        "origin/teaser_5.mp3":       { time:1590},
+        "origin/feature_reelspin.mp3":   { time:4322},
+        "origin/heart_placement.mp3":    { time:310},
+        "origin/feature_end_long.mp3":   { time:8860},
     };
 
     static suffix = '.mp3';
@@ -194,6 +212,8 @@ class SoundPlayer extends GameItem {
                 this.parent.emit('music.progress', player.downloadCount * 100 / files.length);
             });
             sound.once( 'loaderror', ( id, error ) => {
+
+                console.log( 'name ',name);
                 let player = SoundPlayer.instance();
                 player.emit( 'downloadError', {
                     name: name,

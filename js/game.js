@@ -907,7 +907,7 @@ class Game extends GameItem {
                 this.reelBox.setBonusMode( true );
                 this.reelBox.setSymbols( params.setSymbols );
                 this.reelBox.setStoppedSymbols( params.setSymbols );
-                this.playLoop( 'origin/bonus_loop' );
+                this.playLoop( 'origin/feature_reelspin' );
                 this.setState( Game.State.BONUS_ROTATE );
             }
             else {
@@ -1013,8 +1013,8 @@ class Game extends GameItem {
         game.lineBox.addListener( 'extraLineIsShown', game.onExtraLineShown );
         game.lineBox.addListener( 'extraLinesShowFinished', game.onExtraLinesShowFinished );
         
-        game.angelBox = new angelBox( game );
-        game.angelBox.setEnabled(true);
+        // game.angelBox = new angelBox( game );
+        // game.angelBox.setEnabled(true);
 
         game.helpBox = new HelpBox( game, game.helpDef );
 
@@ -1878,7 +1878,7 @@ class Game extends GameItem {
         else if ( game.state == Game.State.BONUS_FINISH ) {         // при показе завершающего баннера бонус-игры
 
             // Выключаем бонус-режим
-            game.stopPlay( "origin/bonus_end" );
+            game.stopPlay( "origin/feature_end_long" );
             game.setBonusGameUI( false );
         }
         else if ( game.state == Game.State.SHOW_JACKPOT ) {         // при показе выигрыша джекпота
@@ -2222,52 +2222,55 @@ class Game extends GameItem {
         // Найти основной символ выигрышной линии
 
         let symbolId;
+        let wildCount = 0;
         let finalSymbols = game.serverData.setSymbols;      // символы останова
         let winLine = game.lines[ lineNum ].form;           // форма выигрышной линии
         for ( let i = 0; i < winSymCount; ++i ) {
             let symbolPos = winLine[i];
             if ( finalSymbols[i][symbolPos] !== game.symbols.scatter.id ) {
                 symbolId = finalSymbols[i][symbolPos];
+                if ( symbolId == 0 ) ++wildCount;
                 break;
             }
         }
 
         // Определить звуковой файл для проигрывания музыки
 
-        let fiveSymbolsSound = ( winSymCount == 5 ) ? 'winring_10steps' : null;
+        // let fiveSymbolsSound = ( winSymCount == 5 ) ? 'winring_10steps' : null;
+        let fiveSymbolsSound =  null;
 
         let soundFile;
-        if ( 6 <= symbolId ) {       // линия из символов "A", "K", "Q", "J", "10"
-            let lineBet = game.selectedBet;
-            if ( winAmount < lineBet * 5 ) {
-                soundFile = "win2";
+   
+        if ( winSymCount === 1 ) {
+            soundFile = "win2";
+        } else if( winSymCount === 5 ){
+            soundFile = "winreel5";
+        }else {
+            if ( wildCount === winSymCount ) {    // линия из wild-символов
+                soundFile = "origin/" + ((winSymCount === 2) ? "top_short" : "top_long");
             }
-            else if ( winAmount < lineBet * 10 ) {
+            else if ( winSymCount === 2 ) {       // линия из 2-х символов кроме скаттера и wild
                 soundFile = "win5";
             }
-            else if ( winAmount < lineBet * 20 ) {
+            else if ( symbolId === 3 ) {       // линия из 3-х или 4-х символов "роза"
+                soundFile = "origin/rose";
+            }
+            else if ( symbolId === 4 ) {       // линия из 3-х или 4-х символов "замок"
+                soundFile = "origin/castle";
+            }
+            else if ( symbolId === 5 ) {       // линия из 3-х или 4-х символов "корона"
+                soundFile = "origin/crown";
+            }
+            else if ( symbolId === 6 ) {       // линия из 3-х или 4-х символов "кольцо"
+                soundFile = "origin/ring";
+            }
+            else if ( winSymCount === 3 ) {       // линия из 3-х символов K, Q, J, 10 или 9
                 soundFile = "win10";
             }
-            else if ( winAmount < lineBet * 25 ) {
-                soundFile = "win20";
-            }
-            else {
+            else {                          // линия из 4-х символов K, Q, J, 10 или 9
                 soundFile = "win25";
             }
         }
-        else if ( symbolId === 1 ) { // мужик
-            soundFile = (winSymCount < 4) ? 'origin/win_1_short' : "origin/win_1_long";
-        }
-        else if ( symbolId === 2 ) { // фараон (мумия)
-            soundFile = (winSymCount < 4) ? 'origin/win_2_short' : "origin/win_2_long";
-        }
-        else if ( symbolId === 3 ) { // статуя Изиды
-            soundFile = (winSymCount < 4) ? 'origin/win_3_short' : "origin/win_3_long";
-        }
-        else if ( symbolId === 4 ) { // жук скарабей
-            soundFile = (winSymCount < 4) ? 'origin/win_4_short' : "origin/win_4_long";
-        }
-
         if ( fiveSymbolsSound ) {   // есть есть звук пяти символов
             if ( soundFile ) {          // есть звук комбинации символов
 
@@ -3036,7 +3039,7 @@ class Game extends GameItem {
         this.bonusBanner.hide();
 
         // Включаем фоновую музыку
-        this.playLoop( 'origin/bonus_loop' );
+        this.playLoop( 'origin/feature_reelspin' );
 
         // Запускаем вращение
         this.startRotate();
@@ -3155,7 +3158,7 @@ class Game extends GameItem {
         game.setState( Game.State.BONUS_FINISH );
 
         game.lineBox.stopShowWinLines();
-        game.stopPlay( 'origin/bonus_loop' );
+        game.stopPlay( 'origin/feature_reelspin' );
 
         // Показать баннер завершения бонус-игры
         let text = "Feature Win\n" + Tools.formatAmount( game.totalWinAmount ) + "\n"
@@ -3164,7 +3167,7 @@ class Game extends GameItem {
 //        game.showMsgBelow( "GAMBLE AMOUNT " + Tools.formatAmount( game.totalWinAmount ) );
 
         // Проиграть мелодию при показе завершающего баннера
-        game.startPlay( "origin/bonus_end", ()=>{   // по завершении мелодии
+        game.startPlay( "origin/feature_end_long", ()=>{   // по завершении мелодии
 
             // Спрятать баннер и выключить бонус-режим
             game.setBonusGameUI( false );
