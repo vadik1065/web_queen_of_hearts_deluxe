@@ -4,33 +4,15 @@ class angelBox extends GameItem {
     super(parent);
 
     // Текстуры для анимации ангела с сердцем
-    let awhOptions = [24,4,125,109] // @params колличество, столбцы, ширина, высота 
+    let awhOptions = [24,4,125,109] ;// @params колличество, столбцы, ширина, высота 
     this.angelWitchHeart = this.getAngelTexture( "./images/game/bonus/cupid_start.png", this.angelWitchHeart,awhOptions );
     this.pixiObj.addChild(this.angelWitchHeart);
     
-    let anhOptions = [24,4,84,74] // @params колличество, столбцы, ширина, высота 
+    let anhOptions = [24,4,84,74]; // @params колличество, столбцы, ширина, высота 
     // Текстуры для анимации ангела без сердца
     this.angelNopeHeart = this.getAngelTexture( "./images/game/bonus/cupid_finish.png", this.angelNopeHeart,anhOptions );
     this.pixiObj.addChild(this.angelNopeHeart);
 
-    // setTimeout(()=>{
-    //     let symPos = rellBox.children[1].symbolPos(1);
-    //     let symSize = rellBox.children[1].symbolSize(1);
-    //     let scale =  Game.instance().scale();
-    //     let bkgPos = Game.instance().background.pos();
-
-    //     this.angelCoor  = 
-    //     [
-    //       15,150
-    //     ];
-    //     this.angelWitchHeart.visible = true;
-    //     this.draw();
-    //     this.angelWitchHeart.x = 50;
-    //     this.angelWitchHeart.y = 150;
-    //     this.angelWitchHeart.zIndex = 150;
-
-    //     // this.angelGiveHeartAnim(2,0,1,0);
-    // },1000)
   }
 
 
@@ -101,8 +83,6 @@ class angelBox extends GameItem {
         let angelBox = game.angelBox;
 
         if ( x <= angelBox.heartCoors[0] && y >= angelBox.heartCoors[1] ){
-            // game.removeTiker(reelBox.routeFlight);
-            // reelBox.angelWitchHeart.onLoop = () =>{
             let inxRell = angelBox.angelData.inxRell;
             let numRell = angelBox.angelData.numRell;
             let numHeart = angelBox.angelData.numHeart;
@@ -116,11 +96,6 @@ class angelBox extends GameItem {
             angelBox.angelWitchHeart.stop();
             angelBox.angelWitchHeart.visible = false;
 
-            // reelBox.directX = (reelBox.angelCoor[0] - reelBox.angelEndCoor[0]) * reelBox.angelSpeed * 0.1;
-            // reelBox.directY = (reelBox.angelCoor[1] - reelBox.angelEndCoor[1]) * reelBox.angelSpeed * 0.1;
-            
-            // game.addTiker(reelBox.routeFlight);
-            // }
             return false;
         }
         return true;
@@ -129,7 +104,6 @@ class angelBox extends GameItem {
     // полёт ангела
     routeFlight(){
         let game = Game.instance();
-        let reelBox = game.reelBox;
         let angelBox = game.angelBox;
 
         let x = angelBox.angelCoor[0];
@@ -163,7 +137,6 @@ class angelBox extends GameItem {
             angelBox.angelNopeHeart.stop();
             angelBox.angelNopeHeart.visible = false;
 
-            console.log('angelBox.angelData.num ',angelBox.angelData.num);
             game.stopPlay( 'origin/cherub' );
             reelBox.emit( 'angelGiveHeart', {num: angelBox.angelData.num + 1} );
             return false;
@@ -204,17 +177,6 @@ class angelBox extends GameItem {
     // ангел пролитает и оставляет сердце
     async angelGiveHeartAnim(inxRell,num, numRell,numHeart){
 
-        // function sleep(tm){
-        //  return new Promise((res) => {
-        //     setTimeout(res,tm)
-        //  })   
-        // };
-        // await sleep(50);
-        // console.log('num', num);
-        // console.log('inxRell', inxRell);
-        // console.log('numRell', numRell);
-
-
         let game = Game.instance();
         game.playLoop( 'origin/cherub' );
 
@@ -226,7 +188,7 @@ class angelBox extends GameItem {
             num:num,
             numRell:numRell,
             numHeart:numHeart
-        }
+        };
         this.angelIsHeart = true;
         this.setAngelAnimPos(...this.angelbeginCoor);
         this.angelCoor =  Tools.clone(this.angelbeginCoor);
@@ -237,8 +199,6 @@ class angelBox extends GameItem {
             ((symPos.x - bkgPos.x ) /  scale.x) +  this.angelWitchHeart.width / 4.1 ,
             ((symPos.y - bkgPos.y ) /  scale.y ) +  this.angelWitchHeart.height / 10
          ];
-
-         console.log(18,this.heartCoors);
 
         this.directX = (this.angelbeginCoor[0] - this.heartCoors[0]) * this.angelSpeed * 0.1;
         this.directY = (this.angelbeginCoor[1] - this.heartCoors[1]) * this.angelSpeed * 0.1;

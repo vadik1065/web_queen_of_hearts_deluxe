@@ -1013,8 +1013,8 @@ class Game extends GameItem {
         game.lineBox.addListener( 'extraLineIsShown', game.onExtraLineShown );
         game.lineBox.addListener( 'extraLinesShowFinished', game.onExtraLinesShowFinished );
         
-        // game.angelBox = new angelBox( game );
-        // game.angelBox.setEnabled(true);
+        game.angelBox = new angelBox( game );
+        game.angelBox.setEnabled(true);
 
         game.helpBox = new HelpBox( game, game.helpDef );
 
