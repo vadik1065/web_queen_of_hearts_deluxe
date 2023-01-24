@@ -7,7 +7,7 @@
         },
 
         "logo": {
-            "vertical":   { "width": 340, "height": 83, "maxHeight": 80, "urls": [ "./images/game/logo.png" ] },
+            "vertical":   { "width": 310, "height": 83, "maxHeight": 80, "urls": [ "./images/game/logo.png" ] },
             "horizontal": { "width": 340, "height": 83, "maxHeight": 120, "urls": [ "./images/game/logo.png" ] }
         },
 
