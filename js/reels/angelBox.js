@@ -51,7 +51,7 @@ class angelBox extends GameItem {
     angelSpeed = 0.15;
 
     // координаты начала полёта
-    angelbeginCoor = [1700,100];
+    angelbeginCoor = [2500,100];
     // angelbeginCoor = [1100,100];
     
     // координаты конца полёта

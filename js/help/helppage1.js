@@ -180,7 +180,8 @@ class HelpPage1 extends ImageItem {
 
             let newOptions = {
                 ... data[ name ].options,
-                ...this.optionsShadow
+                // ...this.optionsShadow,
+                color:"#000000"
             };
             let item = new TextItem( this, str, newOptions );
             this.textItems.push( item );

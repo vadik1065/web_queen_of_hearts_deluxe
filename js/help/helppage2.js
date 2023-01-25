@@ -39,9 +39,9 @@ class HelpPage2 extends ImageItem {
         new ImageItem( this,{ "x": heatrX, "y": 400, "width": 100, "height": 100,  ...options.symbols.heart } );
 
         let text3 = [
-            'Any 3, 4 or 5 scattered               trigger, 8, 15 or 20 Free Games ',
-            'respectively. After each Free Game               may appear and begin',
-            'placing BONUS               randomly on the screen. Free Games can be won ',
+            'Any 3, 4 or 5 scattered　　　　　　trigger, 8, 15 or 20 Free Games ',
+            'respectively. After each Free Game　　　　　　may appear and begin',
+            'placing BONUS　　　　　randomly on the screen. Free Games can be won ',
             'played (expanding is only triggered if enough symbols for a win again',
             'during The Free Games. Free Games are played at trigger bet and lines. '
         ];
